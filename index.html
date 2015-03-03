@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="bower_components/fabric/dist/fabric.js"></script>
+	<style>
+		.canvas-container{
+			margin: auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="c" height='300' width='100' style='margin:auto'>
+		<img src="images/r0.gif">
+		<img src="images/r1.gif">
+		<img src="images/r2.gif">
+		<img src="images/r3.gif">
+		<img src="images/r4.gif">
+		<img src="images/r5.gif">
+		<img src="images/r6.gif">
+		<img src="images/r7.gif">
+		<img src="images/r8.gif">
+		<img src="images/r9.gif">
+		<img src="images/r10.gif">
+		<img src="images/r11.gif">
+		<img src="images/r12.gif">
+	</canvas>
+
+	<button id='btn-start'>Start</button>
+
+	<script>
+		function randomNum(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        var images   = document.querySelectorAll('img');
+        var canvas   = new fabric.Canvas('c');
+        var img 	 = new fabric.Image(images[0])
+        var widthImg = img.getWidth()
+
+        function set(num, combo) {
+            combo.forEach(function(el, i) {
+                canvas.add(new fabric.Image(images[el], {
+                    top: (combo.length + i - num) * widthImg
+                }))
+            })
+
+            for (var i = combo.length - num; i < combo.length; i++) {
+                canvas.add(new fabric.Image(images[randomNum(0,12)], {
+                    top: widthImg * i
+                }))
+            }
+        }
+
+        set(50, [1, 1, 12])
+
+        function carusel(timer) {
+            for (var i = 0; i < canvas._objects.length; i++) {
+                canvas._objects[i].animate({
+                    top: 100 * i,
+                }, { 
+                    onChange: canvas.renderAll.bind(canvas),
+                    duration: timer
+                })
+            }
+        }
+
+        document.querySelector('#btn-start').addEventListener('click', 
+            function() {
+                carusel(5000)
+            }
+        )           
+
+	</script>
+</body>
+</html>
+
