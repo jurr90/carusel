@@ -39,7 +39,7 @@
         var img 	 = new fabric.Image(images[0])
         var widthImg = img.getWidth()
 
-        function set(num, combo) {
+        function createRandomImg(num, combo) {
             combo.forEach(function(el, i) {
                 canvas.add(new fabric.Image(images[el], {
                     top: (combo.length + i - num) * widthImg
@@ -53,7 +53,7 @@
             }
         }
 
-        set(50, [1, 1, 12])
+        createRandomImg(50, [1, 1, 12])
 
         function carusel(timer) {
             for (var i = 0; i < canvas._objects.length; i++) {
